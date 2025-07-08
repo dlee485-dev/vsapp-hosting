@@ -7,14 +7,14 @@ import androidx.room.PrimaryKey;
 public class Excursion {
     @PrimaryKey(autoGenerate = true)
     private int excursionID;
-    private String excursionName;
-    private String hotelName;
+    private String excursionTitle;
+    private String excursionDate;
     private int vacationID;
 
-    public Excursion(int excursionID, String excursionName, String hotelName, int vacationID) {
+    public Excursion(int excursionID, String excursionTitle, String excursionDate, int vacationID) {
         this.excursionID = excursionID;
-        this.excursionName = excursionName;
-        this.hotelName = hotelName;
+        this.excursionTitle = excursionTitle;
+        this.excursionDate = excursionDate;
         this.vacationID = vacationID;
     }
 
@@ -26,20 +26,20 @@ public class Excursion {
         this.excursionID = excursionID;
     }
 
-    public String getExcursionName() {
-        return excursionName;
+    public String getExcursionTitle() {
+        return excursionTitle;
     }
 
-    public void setExcursionName(String excursionName) {
-        this.excursionName = excursionName;
+    public void setExcursionTitle(String excursionTitle) {
+        this.excursionTitle = excursionTitle;
     }
 
-    public String getHotelName() {
-        return hotelName;
+    public String getExcursionDate() {
+        return excursionDate;
     }
 
-    public void getHotelName(String hotelName) {
-        this.hotelName = hotelName;
+    public void setExcursionDate(String excursionDate) {
+        this.excursionDate = excursionDate;
     }
 
     public int getVacationID() {

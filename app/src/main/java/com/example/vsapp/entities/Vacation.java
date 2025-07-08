@@ -3,17 +3,23 @@ package com.example.vsapp.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.time.LocalDate;
+
 @Entity(tableName = "vacations")
 public class Vacation {
     @PrimaryKey(autoGenerate = true)
     private int vacationID;
-    private String vacationName;
+    private String vacationTitle;
     private String hotelName;
+    private String startDate;
+    private String endDate;
 
-    public Vacation(int vacationID, String vacationName, double price) {
+    public Vacation(int vacationID, String vacationTitle, String hotelName, String startDate, String endDate) {
         this.vacationID = vacationID;
-        this.vacationName = vacationName;
+        this.vacationTitle = vacationTitle;
         this.hotelName = hotelName;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public int getVacationID() {
@@ -24,12 +30,12 @@ public class Vacation {
         this.vacationID = vacationID;
     }
 
-    public String getVacationName() {
-        return vacationName;
+    public String getVacationTitle() {
+        return vacationTitle;
     }
 
-    public void setVacationName(String vacationName) {
-        this.vacationName = vacationName;
+    public void setVacationTitle(String vacationTitle) {
+        this.vacationTitle = vacationTitle;
     }
 
     public String getHotelName() {
@@ -38,5 +44,21 @@ public class Vacation {
 
     public void setHotelName(String hotelName) {
         this.hotelName = hotelName;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 }
