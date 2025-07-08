@@ -14,7 +14,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.vsapp.R;
+import com.example.vsapp.entities.Vacation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.time.LocalDate;
 
 public class VacationList extends AppCompatActivity {
 
@@ -49,7 +52,9 @@ public class VacationList extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item){
         if(item.getItemId()==R.id.mysample){
-            Toast.makeText(VacationList.this, "put in sample data",Toast.LENGTH_LONG).show();
+            //Toast.makeText(VacationList.this, "put in sample data",Toast.LENGTH_LONG).show();
+            Vacation vacation=new Vacation(0, "Tahiti", "Four Seasons", "08/06/2025", "8/13/2025");
+
             return true;
         }
         if (item.getItemId()==android.R.id.home){
