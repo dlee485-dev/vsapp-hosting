@@ -154,6 +154,19 @@ public class VacationDetails extends AppCompatActivity {
             return true;
         }
 
+        if (item.getItemId() == R.id.vacationshare) {
+            String vacationDetails = "Vacation: " + editTitle.getText().toString() + "\n" +
+                    "Hotel: " + editHotelName.getText().toString() + "\n" +
+                    "Start Date: " + startDate + "\n" +
+                    "End Date: " + endDate;
+
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, vacationDetails);
+            startActivity(Intent.createChooser(shareIntent, "Share vacation using"));
+            return true;
+        }
+
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
