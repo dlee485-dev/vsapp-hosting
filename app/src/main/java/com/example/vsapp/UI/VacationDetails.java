@@ -75,7 +75,6 @@ public class VacationDetails extends AppCompatActivity {
         editHotelName.setText(hotelName);
 
 
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
