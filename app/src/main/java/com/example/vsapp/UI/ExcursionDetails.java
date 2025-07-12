@@ -1,6 +1,7 @@
 package com.example.vsapp.UI;
 
 import android.os.Bundle;
+import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,8 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.vsapp.R;
 
 public class ExcursionDetails extends AppCompatActivity {
+    EditText excursionTitleText;
+    EditText excursionDateText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,5 +25,15 @@ public class ExcursionDetails extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        excursionTitleText = findViewById(R.id.excursionTitleText);
+        excursionDateText = findViewById(R.id.excursionDateText);
+
+        String title = getIntent().getStringExtra("title");
+        String date = getIntent().getStringExtra("date");
+
+        if (title != null) excursionTitleText.setText(title);
+        if (date != null) excursionDateText.setText(date);
+
     }
 }
