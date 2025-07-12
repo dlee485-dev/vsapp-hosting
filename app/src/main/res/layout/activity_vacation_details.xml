@@ -9,6 +9,7 @@
 
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="500dp"
         android:layout_height="200dp"
         android:background="#7ADEEB"
@@ -31,33 +32,37 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="20dp"
                     android:padding="10dp"
-                    android:text="title: " />
+                    android:text="Vacation Title: " />
 
                 <EditText
                     android:id="@+id/titletext"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_marginTop="20dp"
-                    android:text="second" />
+                    android:text="Vacation Title" />
 
             </LinearLayout>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:text="third" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:padding="10dp"
+                    android:text="Hotel Name: " />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:text="fourth" />
+                <EditText
+                    android:id="@+id/hotelnametext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Hotel Name" />
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:text="fifth" />
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
@@ -70,4 +75,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/excursionrecyclerview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/floatingActionButton2"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
