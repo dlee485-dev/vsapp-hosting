@@ -2,14 +2,14 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Save Product"
+    <item android:title="Save Vacation"
         android:id="@+id/vacationsave"
         android:orderInCategory="1"
-        app:showAsAction="ifRoom" />
-    <item android:title="Delete Product"
+        app:showAsAction="never" />
+    <item android:title="Delete Vacation"
         android:id="@+id/vacationdelete"
         android:orderInCategory="2"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never"/>
     <item
         android:title="Share Vacation"
         android:id="@+id/vacationshare"

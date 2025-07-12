@@ -7,4 +7,50 @@
     android:layout_height="match_parent"
     tools:context=".UI.ExcursionDetails">
 
+    <TextView
+        android:id="@+id/excursionTitleLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Excursion Title:"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp" />
+
+    <EditText
+        android:id="@+id/excursionTitleText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter excursion title"
+        app:layout_constraintTop_toBottomOf="@id/excursionTitleLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/excursionDateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Excursion Date:"
+        app:layout_constraintTop_toBottomOf="@id/excursionTitleText"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp" />
+
+    <EditText
+        android:id="@+id/excursionDateText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="MM/DD/YYYY"
+        android:focusable="false"
+        android:clickable="true"
+        app:layout_constraintTop_toBottomOf="@id/excursionDateLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
