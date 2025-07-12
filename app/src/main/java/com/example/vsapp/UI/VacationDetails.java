@@ -105,6 +105,12 @@ public class VacationDetails extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.vacationsave){
+
+            if (!isEndDateAfterStartDate(startDate, endDate)) {
+                Toast.makeText(this, "End date must be after start date.", Toast.LENGTH_LONG).show();
+                return true;
+            }
+
             Vacation vacation;
             if (vacationID==-1){
                 if (repository.getmAllVacations().size() == 0) vacationID = 1;
@@ -160,6 +166,23 @@ public class VacationDetails extends AppCompatActivity {
             }
         }, year, month, day);
         datePickerDialog.show();
+    }
+
+    private boolean isEndDateAfterStartDate(String start, String end) {
+        try {
+            String[] startParts = start.split("/");
+            String[] endParts = end.split("/");
+
+            Calendar startCal = Calendar.getInstance();
+            Calendar endCal = Calendar.getInstance();
+
+            startCal.set(Integer.parseInt(startParts[2]), Integer.parseInt(startParts[0]) - 1, Integer.parseInt(startParts[1]));
+            endCal.set(Integer.parseInt(endParts[2]), Integer.parseInt(endParts[0]) - 1, Integer.parseInt(endParts[1]));
+
+            return endCal.after(startCal);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 
