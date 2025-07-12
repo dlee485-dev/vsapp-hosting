@@ -111,6 +111,18 @@
         </LinearLayout>
     </ScrollView>
 
+    <Button
+        android:id="@+id/startAlertButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Start Alert" />
+
+    <Button
+        android:id="@+id/endAlertButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set End Alert" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton2"
         android:layout_width="wrap_content"

@@ -1,6 +1,9 @@
 package com.example.vsapp.UI;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.vsapp.AlertReceiver;
 import com.example.vsapp.R;
 import com.example.vsapp.database.Repository;
 import com.example.vsapp.entities.Excursion;
@@ -117,11 +121,19 @@ public class VacationDetails extends AppCompatActivity {
                 else vacationID = repository.getmAllVacations().get(repository.getmAllVacations().size() - 1).getVacationID() + 1;
                 vacation = new Vacation(vacationID, editTitle.getText().toString(), editHotelName.getText().toString(), startDate, endDate);
                 repository.insert(vacation);
+
+                scheduleVacationAlert(startDate, editTitle.getText().toString(), "start");
+                scheduleVacationAlert(endDate, editTitle.getText().toString(), "end");
+
                 this.finish();
             }
             else {
                 vacation = new Vacation(vacationID, editTitle.getText().toString(), editHotelName.getText().toString(), startDate, endDate);
                 repository.update(vacation);
+
+                scheduleVacationAlert(startDate, editTitle.getText().toString(), "start");
+                scheduleVacationAlert(endDate, editTitle.getText().toString(), "end");
+
                 this.finish();
             }
             return true;
@@ -184,6 +196,34 @@ public class VacationDetails extends AppCompatActivity {
             return false;
         }
     }
+
+    private void scheduleVacationAlert(String dateString, String title, String type) {
+        try {
+            String[] parts = dateString.split("/");
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.YEAR, Integer.parseInt(parts[2]));
+            calendar.set(Calendar.MONTH, Integer.parseInt(parts[0]) - 1);
+            calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(parts[1]));
+            calendar.set(Calendar.HOUR_OF_DAY, 9); // 9 AM
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+
+            Intent intent = new Intent(this, AlertReceiver.class);
+            intent.putExtra("title", title);
+            intent.putExtra("type", type);
+
+            int requestCode = (title + type).hashCode();
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            if (alarmManager != null) {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 
