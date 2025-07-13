@@ -83,7 +83,9 @@ public class VacationDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(VacationDetails.this, ExcursionDetails.class);
+                intent.putExtra("vacID", vacationID);
                 startActivity(intent);
+
             }
         });
         RecyclerView recyclerView = findViewById(R.id.excursionrecyclerview);

@@ -15,6 +15,8 @@ public class Repository {
     private ExcursionDAO mExcursionDAO;
     private VacationDAO mVacationDAO;
 
+    private VacationDatabaseBuilder db;
+
     private List<Vacation> mAllVacations;
     private List<Excursion> mAllExcursions;
 
@@ -22,7 +24,7 @@ public class Repository {
     static final ExecutorService databaseExecutor= Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public Repository(Application application){
-        VacationDatabaseBuilder db=VacationDatabaseBuilder.getDatabase(application);
+        db=VacationDatabaseBuilder.getDatabase(application);
         mExcursionDAO= db.excursionDAO();
         mVacationDAO=db.vacationDAO();
     }
@@ -140,5 +142,11 @@ public class Repository {
             throw new RuntimeException(e);
         }
     }
+
+    public Vacation getVacationById(int id) {
+        return db.vacationDAO().getVacationById(id);
+    }
+
+
 
 }
