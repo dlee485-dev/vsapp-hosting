@@ -59,6 +59,12 @@ public class ExcursionDetails extends AppCompatActivity {
         Repository repository = new Repository(getApplication());
 
         if (item.getItemId() == R.id.excursionsave) {
+
+            if (!isDateValid(date)) {
+                excursionDateText.setError("Date must be in MM/DD/YYYY format");
+                return true;
+            }
+
             Excursion excursion = new Excursion(excursionID, title, date, vacationID);
             if (excursionID == -1) {
                 repository.insert(excursion);
@@ -77,6 +83,10 @@ public class ExcursionDetails extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean isDateValid(String date) {
+        return date != null && date.matches("^(0[1-9]|1[0-2])/([0][1-9]|[12][0-9]|3[01])/\\d{4}$");
     }
 
 
