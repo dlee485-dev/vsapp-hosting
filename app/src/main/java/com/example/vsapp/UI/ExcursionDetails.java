@@ -74,6 +74,19 @@ public class ExcursionDetails extends AppCompatActivity {
                 return true;
             }
 
+            com.example.vsapp.entities.Vacation vacation = repository.getVacationById(vacationID);
+            if (vacation == null) {
+                excursionDateText.setError("Associated vacation not found.");
+                return true;
+            }
+            String vacationStart = vacation.getStartDate();
+            String vacationEnd = vacation.getEndDate();
+
+            if (!isDateWithinRange(date, vacationStart, vacationEnd)) {
+                excursionDateText.setError("Excursion date must be during the vacation period (" + vacationStart + " - " + vacationEnd + ")");
+                return true;
+            }
+
             Excursion excursion = new Excursion(excursionID, title, date, vacationID);
             if (excursionID == -1) {
                 repository.insert(excursion);
@@ -83,6 +96,7 @@ public class ExcursionDetails extends AppCompatActivity {
             finish();
             return true;
         }
+
         if (item.getItemId() == R.id.excursiondelete) {
             if (excursionID != -1) {
                 Excursion excursion = new Excursion(excursionID, title, date, vacationID);
@@ -94,11 +108,11 @@ public class ExcursionDetails extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private boolean isDateValid(String date) {
+    private boolean isDateValid (String date){
         return date != null && date.matches("^(0[1-9]|1[0-2])/([0][1-9]|[12][0-9]|3[01])/\\d{4}$");
     }
 
-    private void setExcursionAlert() {
+    private void setExcursionAlert () {
         String date = excursionDateText.getText().toString();
         String title = excursionTitleText.getText().toString();
 
@@ -135,7 +149,7 @@ public class ExcursionDetails extends AppCompatActivity {
             android.widget.Toast.makeText(this, "Failed to set alert. Check date.", android.widget.Toast.LENGTH_SHORT).show();
         }
     }
-    private void showDatePickerDialog() {
+    private void showDatePickerDialog () {
         final java.util.Calendar calendar = java.util.Calendar.getInstance();
         int year = calendar.get(java.util.Calendar.YEAR);
         int month = calendar.get(java.util.Calendar.MONTH);
@@ -149,5 +163,17 @@ public class ExcursionDetails extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    private boolean isDateWithinRange (String date, String start, String end) {
+
+        try {
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MM/dd/yyyy");
+            java.util.Date d = sdf.parse(date);
+            java.util.Date s = sdf.parse(start);
+            java.util.Date e = sdf.parse(end);
+            return !d.before(s) && !d.after(e);
+        } catch (Exception ex) {
+            return false;
+        }
+    }
 
 }
