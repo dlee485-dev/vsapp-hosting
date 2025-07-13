@@ -1,6 +1,8 @@
 package com.example.vsapp.UI;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
@@ -10,10 +12,15 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.vsapp.R;
+import com.example.vsapp.database.Repository;
+import com.example.vsapp.entities.Excursion;
 
 public class ExcursionDetails extends AppCompatActivity {
+
     EditText excursionTitleText;
     EditText excursionDateText;
+    int excursionID;
+    int vacationID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,4 +43,41 @@ public class ExcursionDetails extends AppCompatActivity {
         if (date != null) excursionDateText.setText(date);
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_excursion_details, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        String title = excursionTitleText.getText().toString();
+        String date = excursionDateText.getText().toString();
+
+        Repository repository = new Repository(getApplication());
+
+        if (item.getItemId() == R.id.excursionsave) {
+            Excursion excursion = new Excursion(excursionID, title, date, vacationID);
+            if (excursionID == -1) {
+                repository.insert(excursion);
+            } else {
+                repository.update(excursion);
+            }
+            finish();
+            return true;
+        }
+        if (item.getItemId() == R.id.excursiondelete) {
+            if (excursionID != -1) {
+                Excursion excursion = new Excursion(excursionID, title, date, vacationID);
+                repository.delete(excursion);
+            }
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }
