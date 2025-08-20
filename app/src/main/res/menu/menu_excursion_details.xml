@@ -11,4 +11,7 @@
         android:title="Delete Excursion"
         app:showAsAction="ifRoom"
         android:orderInCategory="2"/>
+    <item
+        android:title="Set Alert"
+        android:id="@+id/excursionalert"/>
 </menu>

@@ -12,7 +12,9 @@
         app:showAsAction="never"/>
     <item
         android:title="Share Vacation"
-        android:id="@+id/vacationshare"
+        android:id="@+id/share"
         android:orderInCategory="3"
         app:showAsAction="never" />
+    <item android:title="Alert Both"
+        android:id="@+id/alertboth"/>
 </menu>
