@@ -1,0 +1,86 @@
+##Title: VSapp - Vacation Scheduling Application
+
+## Purpose:
+VSapp is a comprehensive vacation planning and management application for Android devices. The
+application allows users to organize their vacations by creating detailed vacation records,
+adding associated excursions, setting alerts for important dates, and sharing vacation details with
+others.
+
+## Operating Instructions:
+
+## Navigation Structure
+1) Main Activity - Welcome screen with entry button
+2) Vacation List - Displays all created vacations
+3) Vacation Details - Edit vacation information and view associated excursions
+4) Excursion Details - Create and edit individual excursions
+
+## Getting Started
+1) Launch the application and tap "Enter" on the welcome screen to reach the Vacation List
+screen. All created vacations will appear on the Vacation List screen.
+
+2) To add sample data (two vacations with two excursions each), click on the three dots at the top
+right corner of the menu bar. Once you hit the back button, go to the Main Activity screen and
+press enter again. The sample data will now be displayed.
+
+## Managing Vacations
+
+## Creating New Vacations
+
+1) Tap the floating action button (+) on the Vacation List screen
+2) Enter vacation title and hotel name
+3) Select start and end dates using the date picker buttons
+4) Click "Save Vacation" from the three-button menu to save changes
+*Validation: End dates must be after start dates for vacations
+
+## Editing/Deleting Vacations:
+
+1) Tap on any vacation in the list to open details
+2) Modify fields as needed
+3) Select "Save Vacation" from the three-button menu to save changes
+4) Select "Delete Vacation" from the three-button menu to save changes
+*Validation: Vacations with associated excursions cannot be deleted
+
+##Managing Excursions
+##Adding New Excursions:
+
+1) Open a vacation's details page
+2) Tap the floating action button (+) in the excursion section
+3) Enter excursion title and select date from the data picker buttons
+4) Save using "Save Excursion" from the three-button menu
+*Validation: Excursion dates must fall within the vacation's date range
+
+##Editing/Deleting Excursions:
+
+1) Tap on any excursion in the vacation details list
+2) Modify title or date as needed
+3) Use menu options to save changes or delete the excursion
+
+##Setting Alerts
+##Vacation Alerts:
+
+1) Open vacation details
+2) Select "Alert Both" from the three-button menu to set notifications for both start and end dates
+
+## Excursion Alerts:
+
+1) Open any excursion details
+2) Select "Set Alert" from the three-button menu to receive notification on the excursion date
+
+## Sharing Vacations
+
+1) Open vacation details
+2) Select "Share Vacation" from the three-button menu
+3) Choose your preferred sharing method (email, messaging, etc.)
+(The shared content includes all vacation details and associated excursions)
+
+
+## Rubric Requirements Reached
+Android Version for signed APK: Compatible with Android 8.0 and higher
+Uses Room Framework for database abstraction
+Implements all required CRUD operations accessible from the main user interface
+Includes comprehensive data validation
+Provides alert/notification functionality
+Supports sharing capabilities
+
+## Link to Git Repository
+https://gitlab.com/wgu-gitlab-environment/student-repos/dlee485/d308-mobile-application-development-android/-/tree/working_branch
