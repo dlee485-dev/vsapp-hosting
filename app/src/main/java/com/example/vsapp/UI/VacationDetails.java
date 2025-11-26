@@ -4,15 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +18,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.example.vsapp.R;
 import com.example.vsapp.database.Repository;
 import com.example.vsapp.entities.Excursion;
@@ -71,12 +67,8 @@ public class VacationDetails extends AppCompatActivity {
         editTitle = findViewById(R.id.titletext);
         editHotel = findViewById(R.id.hoteltext);
         vacationID = getIntent().getIntExtra("id", -1);
-        //title = getIntent().getStringExtra("title");
-        //hotel = getIntent().getStringExtra("hotel");
         setStartDate = getIntent().getStringExtra("startdate");
         setEndDate = getIntent().getStringExtra("enddate");
-        //editTitle.setText(title);
-        //editHotel.setText(hotel);
         numAlert = rand.nextInt(99999);
 
         new Thread(() -> {
@@ -89,7 +81,7 @@ public class VacationDetails extends AppCompatActivity {
                 }
             }
             if (found != null) {
-                final Vacation finalVac = found;   // now `finalVac` is effectively final
+                final Vacation finalVac = found;
                 runOnUiThread(() -> {
                     editTitle.setText(finalVac.getVacationTitle());
                     editHotel.setText(finalVac.getHotelName());
@@ -99,9 +91,7 @@ public class VacationDetails extends AppCompatActivity {
             }
         }).start();
 
-
-
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton2);
+        com.google.android.material.floatingactionbutton.FloatingActionButton fab = findViewById(R.id.floatingActionButton2);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,7 +107,7 @@ public class VacationDetails extends AppCompatActivity {
         recyclerView.setAdapter(excursionAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        for (Excursion e: repository.getmAllExcursions()) {
+        for (Excursion e : repository.getmAllExcursions()) {
             if (e.getVacationID() == vacationID) filteredExcursions.add(e);
         }
         excursionAdapter.setmExcursions(filteredExcursions);
@@ -142,7 +132,6 @@ public class VacationDetails extends AppCompatActivity {
         editStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Date date;
                 String info = editStartDate.getText().toString();
                 if (info.equals("")) info = setStartDate;
                 try {
@@ -169,7 +158,6 @@ public class VacationDetails extends AppCompatActivity {
         editEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Date date;
                 String info = editEndDate.getText().toString();
                 if (info.equals("")) info = setEndDate;
                 try {
@@ -192,8 +180,6 @@ public class VacationDetails extends AppCompatActivity {
                 updateLabelEnd();
             }
         };
-
-
     }
 
     private void updateLabelStart() {
@@ -233,14 +219,36 @@ public class VacationDetails extends AppCompatActivity {
                 } else {
                     Vacation vacation;
 
+                    // TEMP: categoryID = 0 (will be wired to Spinner later)
+                    int categoryID = 0;
+
                     if (vacationID == -1) {
-                        if (repository.getmAllVacations().size() == 0) vacationID = 1;
-                        else vacationID = repository.getmAllVacations().get(repository.getmAllVacations().size() - 1).getVacationID() + 1;
-                        vacation = new Vacation(vacationID, editTitle.getText().toString(), editHotel.getText().toString(), startDateString, endDateString);
+                        if (repository.getmAllVacations().size() == 0)
+                            vacationID = 1;
+                        else
+                            vacationID = repository.getmAllVacations()
+                                    .get(repository.getmAllVacations().size() - 1)
+                                    .getVacationID() + 1;
+
+                        vacation = new Vacation(
+                                vacationID,
+                                editTitle.getText().toString(),
+                                editHotel.getText().toString(),
+                                startDateString,
+                                endDateString,
+                                categoryID
+                        );
                         repository.insert(vacation);
                         this.finish();
                     } else {
-                        vacation = new Vacation(vacationID, editTitle.getText().toString(), editHotel.getText().toString(), startDateString, endDateString);
+                        vacation = new Vacation(
+                                vacationID,
+                                editTitle.getText().toString(),
+                                editHotel.getText().toString(),
+                                startDateString,
+                                endDateString,
+                                categoryID
+                        );
                         repository.update(vacation);
                         this.finish();
                     }
@@ -258,7 +266,6 @@ public class VacationDetails extends AppCompatActivity {
             for (Excursion excursion : repository.getmAllExcursions()) {
                 if (excursion.getVacationID() == vacationID) ++numExcursions;
             }
-            //if the vacation has any associated excursions, prevent deletion of the vacation, otherwise delete it
             if (numExcursions == 0) {
                 repository.delete(currentVacation);
                 Toast.makeText(VacationDetails.this, currentVacation.getVacationTitle() + " was deleted", Toast.LENGTH_LONG).show();
@@ -338,7 +345,7 @@ public class VacationDetails extends AppCompatActivity {
 
         filteredExcursions.clear();
 
-        for (Excursion e: repository.getmAllExcursions()) {
+        for (Excursion e : repository.getmAllExcursions()) {
             if (e.getVacationID() == vacationID) {
                 filteredExcursions.add(e);
             }

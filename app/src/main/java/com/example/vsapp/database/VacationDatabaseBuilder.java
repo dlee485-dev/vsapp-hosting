@@ -10,11 +10,15 @@ import com.example.vsapp.dao.ExcursionDAO;
 import com.example.vsapp.dao.VacationDAO;
 import com.example.vsapp.entities.Excursion;
 import com.example.vsapp.entities.Vacation;
+import com.example.vsapp.dao.CategoryDAO;
+import com.example.vsapp.entities.Category;
 
-@Database(entities = {Vacation.class, Excursion.class}, version= 12, exportSchema = false)
+
+@Database(entities = {Vacation.class, Excursion.class, Category.class}, version= 13, exportSchema = false)
 public abstract class VacationDatabaseBuilder extends RoomDatabase {
     public abstract VacationDAO vacationDAO();
     public abstract ExcursionDAO excursionDAO();
+    public abstract CategoryDAO categoryDAO();
     private static volatile VacationDatabaseBuilder INSTANCE;
 
     static VacationDatabaseBuilder getDatabase(final Context context) {

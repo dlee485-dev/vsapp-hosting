@@ -3,8 +3,6 @@ package com.example.vsapp.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.time.LocalDate;
-
 @Entity(tableName = "vacations")
 public class Vacation {
     @PrimaryKey(autoGenerate = true)
@@ -13,13 +11,20 @@ public class Vacation {
     private String hotelName;
     private String startDate;
     private String endDate;
+    private int categoryID;   // 0 = uncategorized / default
 
-    public Vacation(int vacationID, String vacationTitle, String hotelName, String startDate, String endDate) {
+    public Vacation(int vacationID,
+                    String vacationTitle,
+                    String hotelName,
+                    String startDate,
+                    String endDate,
+                    int categoryID) {
         this.vacationID = vacationID;
         this.vacationTitle = vacationTitle;
         this.hotelName = hotelName;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.categoryID = categoryID;
     }
 
     public int getVacationID() {
@@ -60,5 +65,13 @@ public class Vacation {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public int getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(int categoryID) {
+        this.categoryID = categoryID;
     }
 }
