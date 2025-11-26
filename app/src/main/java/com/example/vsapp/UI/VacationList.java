@@ -16,11 +16,14 @@ import android.widget.Toast;
 
 import com.example.vsapp.R;
 import com.example.vsapp.database.Repository;
+import com.example.vsapp.entities.Category;
 import com.example.vsapp.entities.Excursion;
 import com.example.vsapp.entities.Vacation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class VacationList extends AppCompatActivity {
     private Repository repository;
@@ -32,6 +35,9 @@ public class VacationList extends AppCompatActivity {
     private Button searchButton;
     private TextView statusLabel;
 
+    // Map categoryID -> categoryName for searching by category
+    private Map<Integer, String> categoryNameMap = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,17 +47,18 @@ public class VacationList extends AppCompatActivity {
         searchButton = findViewById(R.id.searchButton);
         statusLabel = findViewById(R.id.statusLabel);
 
-        com.google.android.material.floatingactionbutton.FloatingActionButton fab = findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(VacationList.this, VacationDetails.class);
-                startActivity(intent);
-            }
+        com.google.android.material.floatingactionbutton.FloatingActionButton fab =
+                findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(view -> {
+            Intent intent = new Intent(VacationList.this, VacationDetails.class);
+            startActivity(intent);
         });
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         repository = new Repository(getApplication());
+
+        // Load vacations and categories
+        loadCategories();
         allVacations = repository.getmAllVacations();
         filteredVacations.clear();
         filteredVacations.addAll(allVacations);
@@ -61,30 +68,50 @@ public class VacationList extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         vacationAdapter.setVacations(filteredVacations);
 
-        searchButton.setOnClickListener(v -> {
-            String query = searchText.getText().toString().trim().toLowerCase();
-            filteredVacations.clear();
+        searchButton.setOnClickListener(v -> performSearch());
+    }
 
-            if (query.isEmpty()) {
-                filteredVacations.addAll(allVacations);
-                statusLabel.setText("Showing all vacations");
-            } else {
-                for (Vacation vac : allVacations) {
-                    if (vac.getVacationTitle().toLowerCase().contains(query)
-                            || vac.getHotelName().toLowerCase().contains(query)) {
-                        filteredVacations.add(vac);
-                    }
+    private void loadCategories() {
+        categoryNameMap.clear();
+        List<Category> categories = repository.getAllCategories();
+        if (categories != null) {
+            for (Category c : categories) {
+                categoryNameMap.put(c.getCategoryID(), c.getCategoryName());
+            }
+        }
+    }
+
+    private void performSearch() {
+        String query = searchText.getText().toString().trim().toLowerCase();
+        filteredVacations.clear();
+
+        if (query.isEmpty()) {
+            filteredVacations.addAll(allVacations);
+            statusLabel.setText("Showing all vacations");
+        } else {
+            for (Vacation vac : allVacations) {
+                String title = vac.getVacationTitle() != null ? vac.getVacationTitle().toLowerCase() : "";
+                String hotel = vac.getHotelName() != null ? vac.getHotelName().toLowerCase() : "";
+                String categoryName = "";
+                if (categoryNameMap.containsKey(vac.getCategoryID())) {
+                    categoryName = categoryNameMap.get(vac.getCategoryID()).toLowerCase();
                 }
-                if (filteredVacations.isEmpty()) {
-                    statusLabel.setText("No vacations match \"" + query + "\"");
-                } else {
-                    statusLabel.setText("Showing results for \"" + query + "\"");
+
+                if (title.contains(query) ||
+                        hotel.contains(query) ||
+                        categoryName.contains(query)) {
+                    filteredVacations.add(vac);
                 }
             }
+            if (filteredVacations.isEmpty()) {
+                statusLabel.setText("No vacations match \"" + query + "\"");
+            } else {
+                statusLabel.setText("Showing results for \"" + query + "\"");
+            }
+        }
 
-            vacationAdapter.setVacations(filteredVacations);
-            Toast.makeText(this, "Search clicked", Toast.LENGTH_SHORT).show();
-        });
+        vacationAdapter.setVacations(filteredVacations);
+        Toast.makeText(this, "Search clicked", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -96,6 +123,7 @@ public class VacationList extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        loadCategories();
         allVacations = repository.getmAllVacations();
         filteredVacations.clear();
         filteredVacations.addAll(allVacations);
@@ -124,7 +152,7 @@ public class VacationList extends AppCompatActivity {
                     "09/01/25", "09/10/25", 0);
             repository.insert(vacation);
             vacation = new Vacation(0, "Hawaii", "Hilton",
-                    "10/01/25", "10/14/25", 0);
+                    "10/01/25", "10/14/25", 1);
             repository.insert(vacation);
 
             Excursion excursion = new Excursion(0, "Cycling", "09/03/25", 1);
@@ -132,7 +160,7 @@ public class VacationList extends AppCompatActivity {
             excursion = new Excursion(0, "Wine Tasting", "09/05/25", 1);
             repository.insert(excursion);
 
-            excursion = new Excursion(0, "Wakiki Hiking", "10/05/25", 2);
+            excursion = new Excursion(0, "Waikiki Hiking", "10/05/25", 2);
             repository.insert(excursion);
             excursion = new Excursion(0, "Surfing", "10/08/25", 2);
             repository.insert(excursion);
