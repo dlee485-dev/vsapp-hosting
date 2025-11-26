@@ -18,6 +18,10 @@
             android:parentActivityName=".UI.ExcursionDetails"
             android:exported="false" />
         <activity
+            android:name=".UI.VacationReportActivity"
+            android:exported="false"
+            android:label="Vacation Report" />
+        <activity
             android:name=".UI.VacationDetails"
             android:exported="false"
             android:label="Vacation Details and Excursion List"

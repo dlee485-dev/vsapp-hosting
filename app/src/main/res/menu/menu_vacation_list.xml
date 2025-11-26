@@ -2,9 +2,12 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Add Sample Code"
-        android:id="@+id/mysample"/>
-    <item android:title="Item"
-        android:id="@+id/item"/>
+    <item
+        android:id="@+id/mysample"
+        android:title="Add Sample Code" />
+
+    <item
+        android:id="@+id/viewReport"
+        android:title="View Vacation Report" />
 
 </menu>

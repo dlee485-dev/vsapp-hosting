@@ -148,11 +148,9 @@ public class VacationList extends AppCompatActivity {
         if (item.getItemId() == R.id.mysample) {
             repository = new Repository(getApplication());
 
-            Vacation vacation = new Vacation(0, "Puerto Rico", "Mariott",
-                    "09/01/25", "09/10/25", 0);
+            Vacation vacation = new Vacation(0, "Puerto Rico", "Mariott", "09/01/25", "09/10/25",1);
             repository.insert(vacation);
-            vacation = new Vacation(0, "Hawaii", "Hilton",
-                    "10/01/25", "10/14/25", 1);
+            vacation = new Vacation(0, "Hawaii", "Hilton", "10/01/25", "10/14/25",2);
             repository.insert(vacation);
 
             Excursion excursion = new Excursion(0, "Cycling", "09/03/25", 1);
@@ -160,15 +158,22 @@ public class VacationList extends AppCompatActivity {
             excursion = new Excursion(0, "Wine Tasting", "09/05/25", 1);
             repository.insert(excursion);
 
-            excursion = new Excursion(0, "Waikiki Hiking", "10/05/25", 2);
+            excursion = new Excursion(0, "Wakiki Hiking", "10/05/25", 2);
             repository.insert(excursion);
             excursion = new Excursion(0, "Surfing", "10/08/25", 2);
             repository.insert(excursion);
 
-            Toast.makeText(this, "Sample data added", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        if (item.getItemId() == R.id.viewReport) {
+            Intent intent = new Intent(VacationList.this, VacationReportActivity.class);
+            startActivity(intent);
             return true;
         }
 
         return true;
     }
+
+
 }
