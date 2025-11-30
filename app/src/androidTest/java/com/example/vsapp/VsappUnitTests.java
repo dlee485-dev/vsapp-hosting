@@ -14,26 +14,20 @@ public class VsappUnitTests {
 
     private final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy", Locale.US);
 
-    // Helper: Vacation date validation
 
-    /*
-     * Returns true if the end date is on or after the start date.
-     * Returns false if parsing fails or the end date is before the start date.
-     */
     private boolean isVacationDateRangeValid(String start, String end) {
         try {
             java.util.Date startDate = sdf.parse(start);
             java.util.Date endDate = sdf.parse(end);
             if (startDate == null || endDate == null) return false;
-            return !endDate.before(startDate);   // valid if end >= start
+            return !endDate.before(startDate);
         } catch (ParseException e) {
-            // Invalid date format is treated as failing validation
+
             return false;
         }
     }
 
 
-    // Helper for PIN hashing & validation
     private String hashPin(String pin) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -48,9 +42,6 @@ public class VsappUnitTests {
         }
     }
 
-    /**
-     * Returns true if the entered PIN, when hashed, matches the stored hash.
-     */
     private boolean isPinValid(String enteredPin, String storedHashedPin) {
         if (enteredPin == null || enteredPin.trim().isEmpty()) {
             return false;
