@@ -4,10 +4,9 @@ Welcome to the hosting page for **VSapp**, a mobile Android application designed
 vacations, manage excursions, set alerts, and generate custom reports.
 This page provides direct access to the application’s installable APK file.
 
-**Download the APK: ** <br>
+**Download the APK: **
 
-Click here to download VSapp (APK) <br>
-
+Click here to download VSapp (APK)
 https://dlee485-dev.github.io/vsapp-hosting/app-debug.apk <br> 
 
 **About This App**
