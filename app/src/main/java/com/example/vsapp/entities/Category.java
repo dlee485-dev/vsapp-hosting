@@ -5,10 +5,8 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "categories")
 public class Category {
-
     @PrimaryKey(autoGenerate = true)
     private int categoryID;
-
     private String categoryName;
 
     public Category(int categoryID, String categoryName) {
@@ -30,5 +28,10 @@ public class Category {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    @Override
+    public String toString() {
+        return categoryName;
     }
 }

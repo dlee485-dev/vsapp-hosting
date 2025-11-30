@@ -15,13 +15,13 @@ import com.example.vsapp.entities.Excursion;
 
 import java.util.List;
 
-//sets up the RecyclerView list
+// Sets up the RecyclerView list for excursions
 public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.ExcursionViewHolder> {
+
     private List<Excursion> mExcursions;
     private final Context context;
     private final LayoutInflater mInflater;
-    private String startVacationDate;
-    private String endVacationDate;
+
     class ExcursionViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView excursionItemView;
@@ -31,18 +31,18 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
             super(itemView);
             excursionItemView = itemView.findViewById(R.id.textView2);
             excursionItemView2 = itemView.findViewById(R.id.textView3);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    final Excursion current = mExcursions.get(position);
-                    Intent intent = new Intent(context, ExcursionDetails.class);
-                    intent.putExtra("id", current.getExcursionID());
-                    intent.putExtra("title", current.getExcursionTitle());
-                    intent.putExtra("vacationID", current.getVacationID());
-                    intent.putExtra("excursionDate", current.getExcursionDate());
-                    context.startActivity(intent);
-                }
+
+            itemView.setOnClickListener(view -> {
+                int position = getAdapterPosition();
+                if (mExcursions == null || position == RecyclerView.NO_POSITION) return;
+
+                final Excursion current = mExcursions.get(position);
+                Intent intent = new Intent(context, ExcursionDetails.class);
+                intent.putExtra("id", current.getExcursionID());
+                intent.putExtra("title", current.getExcursionTitle());
+                intent.putExtra("vacationID", current.getVacationID());
+                intent.putExtra("excursionDate", current.getExcursionDate());
+                context.startActivity(intent);
             });
         }
     }
@@ -52,10 +52,11 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
         this.context = context;
     }
 
+    @NonNull
     @Override
     public ExcursionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.excursion_list_item, parent, false);
-        return new ExcursionViewHolder(itemView);
+        View view = mInflater.inflate(R.layout.excursion_list_item, parent, false);
+        return new ExcursionViewHolder(view);
     }
 
     @Override
@@ -64,8 +65,8 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
             Excursion current = mExcursions.get(position);
             String title = current.getExcursionTitle();
             String date = current.getExcursionDate();
-            holder.excursionItemView.setText("Excursion: " + title);
 
+            holder.excursionItemView.setText("Excursion: " + title);
             holder.excursionItemView2.setText("Date: " + date);
         } else {
             holder.excursionItemView.setText("No excursion title");
@@ -78,8 +79,8 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
         notifyDataSetChanged();
     }
 
+    @Override
     public int getItemCount() {
-        if (mExcursions != null) return mExcursions.size();
-        else return 0;
+        return (mExcursions == null) ? 0 : mExcursions.size();
     }
 }

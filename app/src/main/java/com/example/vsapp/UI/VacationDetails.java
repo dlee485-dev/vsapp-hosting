@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -83,29 +84,20 @@ public class VacationDetails extends AppCompatActivity {
         setEndDate = getIntent().getStringExtra("enddate");
         numAlert = rand.nextInt(99999);
 
-        // 1) Load categories and initialize spinner
         setupCategorySpinner();
 
-        // 2) Load existing vacation (if editing)
         loadExistingVacation();
 
-        // 3) Set up excursions list
         setupExcursionsRecycler();
 
-        // 4) Date pickers
         setupDatePickers();
     }
 
     private void setupCategorySpinner() {
-        // Get categories from DB; if none, seed defaults.
+        // Load categories from DB
         allCategories = repository.getAllCategories();
-        if (allCategories == null || allCategories.isEmpty()) {
-            repository.insert(new Category(0, "Leisure"));
-            repository.insert(new Category(0, "Business"));
-            repository.insert(new Category(0, "Family"));
-            repository.insert(new Category(0, "Adventure"));
-            repository.insert(new Category(0, "Other"));
-            allCategories = repository.getAllCategories();
+        if (allCategories == null) {
+            allCategories = new ArrayList<>();
         }
 
         List<String> names = new ArrayList<>();
@@ -122,9 +114,10 @@ public class VacationDetails extends AppCompatActivity {
         categorySpinner.setAdapter(categoryAdapter);
     }
 
+
     private void loadExistingVacation() {
         if (vacationID == -1) {
-            // New vacation: just use current dates / defaults
+
             return;
         }
 
@@ -142,7 +135,7 @@ public class VacationDetails extends AppCompatActivity {
 
             currentVacation = found;
 
-            final Vacation result = found;   // REQUIRED FOR LAMBDA
+            final Vacation result = found;
 
             runOnUiThread(() -> {
 
@@ -153,7 +146,6 @@ public class VacationDetails extends AppCompatActivity {
                     editEndDate.setText(result.getEndDate());
                 }
 
-                // ------- CATEGORY SPINNER SETUP -------
                 ArrayList<String> categoryNames = new ArrayList<>();
                 for (Category c : allCategories) {
                     categoryNames.add(c.getCategoryName());
@@ -167,7 +159,6 @@ public class VacationDetails extends AppCompatActivity {
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 categorySpinner.setAdapter(adapter);
 
-                // Pre-select correct category if editing a vacation
                 if (result != null) {
                     selectedCategoryId = result.getCategoryID();
 
@@ -188,8 +179,8 @@ public class VacationDetails extends AppCompatActivity {
     }
 
     private void setupExcursionsRecycler() {
-        com.google.android.material.floatingactionbutton.FloatingActionButton fab = findViewById(R.id.floatingActionButton2);
-        fab.setOnClickListener(view -> {
+        Button addExcursionButton = findViewById(R.id.addExcursionButton);
+        addExcursionButton.setOnClickListener(view -> {
             Intent intent = new Intent(VacationDetails.this, ExcursionDetails.class);
             intent.putExtra("vacationID", vacationID);
             startActivity(intent);
@@ -319,7 +310,7 @@ public class VacationDetails extends AppCompatActivity {
             if (endDate.before(startDate)) {
                 Toast.makeText(this, "End date must be after start date", Toast.LENGTH_LONG).show();
             } else {
-                // Resolve selected categoryID from spinner position
+
                 int spinnerIndex = categorySpinner.getSelectedItemPosition();
                 if (spinnerIndex >= 0 && spinnerIndex < allCategories.size()) {
                     selectedCategoryId = allCategories.get(spinnerIndex).getCategoryID();

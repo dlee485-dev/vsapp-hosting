@@ -7,7 +7,13 @@
         android:title="Add Sample Code" />
 
     <item
-        android:id="@+id/viewReport"
-        android:title="View Vacation Report" />
+        android:id="@+id/menu_view_report"
+        android:title="View Vacation Report"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/security_settings"
+        android:title="Security / PIN Settings"
+        app:showAsAction="never" />
 
 </menu>

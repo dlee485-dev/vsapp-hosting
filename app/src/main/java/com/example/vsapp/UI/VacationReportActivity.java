@@ -7,11 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.vsapp.R;
 import com.example.vsapp.database.Repository;
@@ -28,8 +26,6 @@ import java.util.Locale;
 
 public class VacationReportActivity extends AppCompatActivity {
 
-    private TextView reportTitle;
-    private TextView reportTimestamp;
     private EditText filterStartDateBtn;
     private EditText filterEndDateBtn;
     private Button generateButton;
@@ -38,7 +34,6 @@ public class VacationReportActivity extends AppCompatActivity {
     private final Calendar startCal = Calendar.getInstance();
     private final Calendar endCal = Calendar.getInstance();
     private final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy", Locale.US);
-    private final SimpleDateFormat timestampFormat = new SimpleDateFormat("MM/dd/yy HH:mm:ss", Locale.US);
 
     private Repository repository;
     private VacationReportAdapter adapter;
@@ -51,36 +46,25 @@ public class VacationReportActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vacation_report);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         repository = new Repository(getApplication());
 
-        reportTitle = findViewById(R.id.reportTitle);
-        reportTimestamp = findViewById(R.id.reportTimestamp);
         filterStartDateBtn = findViewById(R.id.filterStartDate);
-        filterEndDateBtn = findViewById(R.id.filterEndDate);
-        generateButton = findViewById(R.id.generateReportButton);
+        filterEndDateBtn  = findViewById(R.id.filterEndDate);
+        generateButton    = findViewById(R.id.generateReportButton);
         reportRecyclerView = findViewById(R.id.reportRecyclerView);
 
         adapter = new VacationReportAdapter();
         reportRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         reportRecyclerView.setAdapter(adapter);
 
-        updateTimestamp();
+        filterStartDateBtn.setOnClickListener(view -> showDatePicker(true));
+        filterEndDateBtn.setOnClickListener(view -> showDatePicker(false));
+        generateButton.setOnClickListener(view -> generateReport());
 
-        filterStartDateBtn.setOnClickListener(view -> {
-            showDatePicker(true);
-        });
-
-        filterEndDateBtn.setOnClickListener(view -> {
-            showDatePicker(false);
-        });
-
-        generateButton.setOnClickListener(view -> {
-            generateReport();
-        });
-
-        // Initial load: show all vacations without filters
         generateReport();
     }
 
@@ -91,11 +75,6 @@ public class VacationReportActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void updateTimestamp() {
-        String ts = "Generated: " + timestampFormat.format(new Date());
-        reportTimestamp.setText(ts);
     }
 
     private void showDatePicker(boolean isStart) {
@@ -125,8 +104,6 @@ public class VacationReportActivity extends AppCompatActivity {
     }
 
     private void generateReport() {
-        updateTimestamp();
-
         List<Vacation> vacations = repository.getmAllVacations();
         List<Excursion> excursions = repository.getmAllExcursions();
 
@@ -138,13 +115,11 @@ public class VacationReportActivity extends AppCompatActivity {
 
             try {
                 vacStart = sdf.parse(vac.getStartDate());
-                vacEnd = sdf.parse(vac.getEndDate());
+                vacEnd   = sdf.parse(vac.getEndDate());
             } catch (ParseException e) {
-                // Skip malformed dates
                 continue;
             }
 
-            // Apply optional date filters (overlap logic)
             if (filterStartDate != null && vacEnd.before(filterStartDate)) {
                 continue;
             }

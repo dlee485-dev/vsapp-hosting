@@ -6,7 +6,6 @@
     android:padding="8dp"
     android:background="?android:attr/selectableItemBackground">
 
-    <!-- Row 1: Title + Hotel -->
     <TextView
         android:id="@+id/reportTitleText"
         android:layout_width="0dp"
@@ -30,7 +29,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1" />
 
-    <!-- Row 2: Dates -->
     <TextView
         android:id="@+id/reportDatesText"
         android:layout_width="0dp"
@@ -41,7 +39,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Row 3: Excursion count -->
     <TextView
         android:id="@+id/reportExcursionsText"
         android:layout_width="0dp"

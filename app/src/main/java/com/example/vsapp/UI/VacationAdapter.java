@@ -16,67 +16,74 @@ import com.example.vsapp.entities.Vacation;
 import java.util.List;
 
 public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.VacationViewHolder> {
+
     private List<Vacation> mVacations;
     private final Context context;
     private final LayoutInflater mInflater;
+
     public VacationAdapter(Context context) {
-        mInflater= LayoutInflater.from(context);
+        mInflater = LayoutInflater.from(context);
         this.context = context;
     }
 
     public class VacationViewHolder extends RecyclerView.ViewHolder {
-        private final TextView vacationItemView;
+
+        private final TextView vacationTitle;
+        private final TextView vacationHotel;
+        private final TextView vacationDates;
+
         public VacationViewHolder(@NonNull View itemView) {
             super(itemView);
-            vacationItemView=itemView.findViewById(R.id.textView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position=getAdapterPosition();
-                    final Vacation current=mVacations.get(position);
-                    Intent intent=new Intent(context,VacationDetails.class);
-                    intent.putExtra("id",current.getVacationID());
-                    intent.putExtra("title",current.getVacationTitle());
-                    intent.putExtra("hotelname",current.getHotelName());
-                    intent.putExtra("startdate",current.getStartDate());
-                    intent.putExtra("enddate",current.getEndDate());
-                    context.startActivity(intent);
-                }
-            });
 
+            vacationTitle = itemView.findViewById(R.id.vacationTitle);
+            vacationHotel = itemView.findViewById(R.id.vacationHotel);
+            vacationDates = itemView.findViewById(R.id.vacationDates);
+
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                final Vacation current = mVacations.get(position);
+
+                Intent intent = new Intent(context, VacationDetails.class);
+                intent.putExtra("id", current.getVacationID());
+                intent.putExtra("title", current.getVacationTitle());
+                intent.putExtra("hotelname", current.getHotelName());
+                intent.putExtra("startdate", current.getStartDate());
+                intent.putExtra("enddate", current.getEndDate());
+                intent.putExtra("categoryID", current.getCategoryID());
+
+                context.startActivity(intent);
+            });
         }
     }
+
     @NonNull
     @Override
     public VacationAdapter.VacationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView=mInflater.inflate(R.layout.vacation_list_item,parent,false);
+        View itemView = mInflater.inflate(R.layout.vacation_list_item, parent, false);
         return new VacationViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull VacationAdapter.VacationViewHolder holder, int position) {
-        if(mVacations!=null) {
-            Vacation current=mVacations.get(position);
-            String name=current.getVacationTitle();
-            holder.vacationItemView.setText(name);
-        }
-        else {
-            holder.vacationItemView.setText("No product name");
+        if (mVacations != null) {
+            Vacation current = mVacations.get(position);
+
+            holder.vacationTitle.setText(current.getVacationTitle());
+            holder.vacationHotel.setText("Hotel: " + current.getHotelName());
+            holder.vacationDates.setText("From " + current.getStartDate() + " to " + current.getEndDate());
         }
     }
 
     @Override
     public int getItemCount() {
-        if(mVacations!=null) {
+        if (mVacations != null)
             return mVacations.size();
-        }
-        else return 0;
+        else
+            return 0;
     }
 
     public void setVacations(List<Vacation> vacations) {
-        mVacations=vacations;
+        mVacations = vacations;
         notifyDataSetChanged();
     }
-
-
 }

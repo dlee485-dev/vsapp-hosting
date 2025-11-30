@@ -1,66 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.VacationDetails">
+    tools:context=".UI.VacationDetails"
+    android:paddingTop="?attr/actionBarSize">
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:background="#00BCD4"
+        android:layout_marginTop="8dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="8dp">
 
-            <!-- Vacation title -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
                     android:padding="10dp"
-                    android:text="Vacation Title: " />
+                    android:text="Vacation Title:" />
 
                 <EditText
                     android:id="@+id/titletext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:hint="Vacation 1" />
             </LinearLayout>
 
-            <!-- Hotel name -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:padding="10dp"
-                    android:text="Hotel Name: " />
-
-                <EditText
-                    android:id="@+id/hoteltext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:hint="Hotel" />
-
-            </LinearLayout>
-
-            <!-- Category row with Spinner -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -71,30 +56,53 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="Category: "
-                    android:textSize="16sp" />
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:text="Hotel Name:" />
 
-                <Spinner
-                    android:id="@+id/categorySpinner"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/hoteltext"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:padding="4dp" />
+                    android:layout_weight="1"
+                    android:hint="Hotel" />
             </LinearLayout>
 
-            <!-- Start date -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="12dp">
+                android:gravity="center_vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="Start Date: "
-                    android:textSize="16sp" />
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:text="Category:" />
+
+                <Spinner
+                    android:id="@+id/categorySpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:text="Start Date:" />
 
                 <Button
                     android:id="@+id/startDate"
@@ -102,24 +110,23 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:ems="10"
-                    android:inputType="date"
                     android:text="Select Start Date" />
             </LinearLayout>
 
-            <!-- End date -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="12dp">
+                android:layout_marginTop="8dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="End Date: "
-                    android:textSize="16sp" />
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:text="End Date:" />
 
                 <Button
                     android:id="@+id/endDate"
@@ -127,46 +134,49 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:ems="10"
-                    android:inputType="date"
                     android:text="Select End Date" />
             </LinearLayout>
-        </LinearLayout>
 
+        </LinearLayout>
     </ScrollView>
 
     <TextView
         android:id="@+id/excursionLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginStart="16dp"
         android:text="Excursions:"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView"
+        app:layout_constraintTop_toBottomOf="@id/scrollView"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/excursionrecyclerview"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="80dp"
-        app:layout_constraintTop_toBottomOf="@+id/excursionLabel"
+        app:layout_constraintTop_toBottomOf="@id/excursionLabel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/addExcursionButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Add New Excursion"
+        android:textAllCaps="false"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
